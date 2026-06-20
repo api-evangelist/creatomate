@@ -1,0 +1,105 @@
+aid: creatomate
+url: https://raw.githubusercontent.com/api-evangelist/creatomate/refs/heads/main/apis.yml
+name: Creatomate
+kind: company
+description: Creatomate is a media-automation platform that generates videos and images
+  at scale from reusable templates. Its REST API renders MP4/GIF/image output by
+  applying per-element modifications to a template, runs asynchronously, and notifies
+  callers via polling or webhooks. Billing is credit-based per rendered output.
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+tags:
+- Media
+- Video Generation
+- Image Generation
+- Automation
+- Templates
+- Rendering
+created: '2026-06-20'
+modified: '2026-06-20'
+specificationVersion: '0.19'
+apis:
+- aid: creatomate:renders
+  name: Creatomate Renders API
+  tags:
+  - Renders
+  - Video
+  - Image
+  - Async
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://creatomate.com/docs/api/reference/introduction
+  baseURL: https://api.creatomate.com/v1
+  properties:
+  - url: https://creatomate.com/docs/api/quick-start/introduction
+    type: Documentation
+  - url: https://creatomate.com/docs/api/reference/create-a-render
+    type: APIReference
+  - url: openapi/creatomate-openapi.yml
+    type: OpenAPI
+  - url: collections/creatomate.postman_collection.json
+    type: PostmanCollection
+  - url: collections/creatomate.opencollection.json
+    type: OpenCollection
+  description: Create one or more renders from a template ID, source, or template tags,
+    applying per-element modifications, then poll for status or receive a webhook
+    when each render succeeds or fails. Output is MP4, GIF, JPG, or PNG hosted by
+    Creatomate.
+- aid: creatomate:templates
+  name: Creatomate Templates API
+  tags:
+  - Templates
+  - Catalog
+  - Metadata
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://creatomate.com/docs/api/reference/get-all-templates-in-a-project
+  baseURL: https://api.creatomate.com/v1
+  properties:
+  - url: https://creatomate.com/docs/api/reference/get-all-templates-in-a-project
+    type: Documentation
+  - url: https://creatomate.com/docs/api/reference/get-a-template-by-its-id
+    type: APIReference
+  - url: openapi/creatomate-openapi.yml
+    type: OpenAPI
+  - url: collections/creatomate.postman_collection.json
+    type: PostmanCollection
+  - url: collections/creatomate.opencollection.json
+    type: OpenCollection
+  description: List the templates in a project with their metadata and tags, and fetch
+    a single template by ID including its RenderScript source, which describes the
+    named elements available for modification at render time.
+- aid: creatomate:webhooks
+  name: Creatomate Webhooks
+  tags:
+  - Webhooks
+  - Async
+  - Notifications
+  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  humanURL: https://creatomate.com/docs/api/rest-api/webhooks
+  baseURL: https://api.creatomate.com/v1
+  properties:
+  - url: https://creatomate.com/docs/api/rest-api/webhooks
+    type: Documentation
+  - url: https://creatomate.com/docs/api/reference/set-up-a-webhook
+    type: APIReference
+  - url: openapi/creatomate-openapi.yml
+    type: OpenAPI
+  description: Per-render callback delivery. Supply webhook_url when creating a render
+    and Creatomate POSTs the full Render object (including any caller-supplied metadata)
+    to that URL once the render reaches a terminal succeeded or failed state.
+common:
+- type: GitHubOrganization
+  url: https://github.com/creatomate
+- type: LinkedIn
+  url: https://www.linkedin.com/company/creatomate
+- type: Website
+  url: https://creatomate.com/
+- type: Documentation
+  url: https://creatomate.com/docs/api/quick-start/introduction
+- type: Plans
+  url: plans/creatomate-plans-pricing.yml
+- type: RateLimits
+  url: rate-limits/creatomate-rate-limits.yml
+- type: FinOps
+  url: finops/creatomate-finops.yml
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

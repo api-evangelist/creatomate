@@ -1,0 +1,101 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Creatomate API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Renders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Create one or more renders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.creatomate.com/v1/renders",
+            "body": {
+              "type": "json",
+              "data": "{\n  \"template_id\": \"YOUR_TEMPLATE_ID\",\n  \"modifications\": {\n    \"Text-1\": \"Hi! Thanks for trying out Creatomate!\",\n    \"Video\": \"https://creatomate-static.s3.amazonaws.com/demo/video5.mp4\"\n  },\n  \"output_format\": \"mp4\",\n  \"webhook_url\": \"https://example.com/webhooks/creatomate\",\n  \"metadata\": \"order-1234\"\n}"
+            }
+          },
+          "docs": "Start one or more renders from a template_id, source, or template tags, applying per-element modifications. Returns 202 Accepted with the queued renders in the planned state."
+        },
+        {
+          "info": {
+            "name": "List renders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.creatomate.com/v1/renders?limit=100"
+          },
+          "docs": "List renders in the project, most recent first. Optionally filter by template_id."
+        },
+        {
+          "info": {
+            "name": "Get the status of a render",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.creatomate.com/v1/renders/{{render_id}}"
+          },
+          "docs": "Return a single render including its status and, once complete, the url of the output file. Status is one of planned, waiting, transcribing, rendering, succeeded, failed."
+        },
+        {
+          "info": {
+            "name": "Delete a render",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.creatomate.com/v1/renders/{{render_id}}"
+          },
+          "docs": "Delete a render and its associated output file."
+        }
+      ]
+    },
+    {
+      "info": {
+        "name": "Templates",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get all templates in a project",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.creatomate.com/v1/templates?limit=100"
+          },
+          "docs": "Return the metadata of every template in the project. Does not include each template's RenderScript source."
+        },
+        {
+          "info": {
+            "name": "Get a template by its ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.creatomate.com/v1/templates/{{template_id}}"
+          },
+          "docs": "Return a single template including its RenderScript source, which describes the named elements available for modification at render time."
+        }
+      ]
+    }
+  ]
+}

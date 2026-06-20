@@ -1,0 +1,59 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Creatomate
+providerId: creatomate
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: false
+tags:
+- Media
+- Video Generation
+- Image Generation
+- Automation
+- Templates
+- Rendering
+- Rate Limiting
+- Quotas
+- Throttling
+description: >-
+  Creatomate's primary throughput constraint is the rendering concurrency and
+  monthly credit pool tied to each subscription plan rather than published
+  per-second request limits. Renders are queued and processed asynchronously,
+  so high request volumes are absorbed by the render queue; the binding limits
+  are the included credits per month and the number of renders that can be
+  processed in parallel. Specific per-plan concurrency and any HTTP request
+  rate limits are not enumerated in this artifact.
+notes: >-
+  Verify per-plan render concurrency and any documented HTTP request limits in
+  the Creatomate API reference and plan details during reconciliation. Credit
+  exhaustion, not request rate, is typically the first limit reached.
+sources:
+- https://creatomate.com/docs/api/reference/introduction
+- https://creatomate.com/pricing
+responseCodes:
+  throttled: 429
+limits:
+- name: Render Concurrency
+  scope: project
+  metric: renders
+  limit: see provider documentation
+  notes: Number of renders processed in parallel; varies by subscription plan.
+- name: Monthly Credits
+  scope: project
+  metric: credits
+  limit: see plan
+  notes: Each plan includes a fixed monthly credit pool consumed per rendered output.
+- name: HTTP Request Rate
+  scope: project
+  metric: requests
+  limit: see provider documentation
+  notes: Async queueing absorbs bursts; explicit per-second request limits are not published.
+policies:
+- name: Asynchronous Queueing
+  description: Renders are queued and processed asynchronously; poll GET /renders/{id} or use a webhook rather than blocking on a request.
+- name: Backoff Strategy
+  description: Clients should implement exponential backoff with jitter and honor 429 responses.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

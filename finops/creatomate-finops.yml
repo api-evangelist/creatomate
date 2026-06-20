@@ -1,0 +1,98 @@
+specification: FinOps Framework
+specificationVersion: '1.0'
+schema: https://www.finops.org/framework/
+provider: Creatomate
+providerId: creatomate
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: true
+tags:
+- Media
+- Video Generation
+- Image Generation
+- Automation
+- Templates
+- Rendering
+- FinOps
+- Cost Management
+- FOCUS
+description: >-
+  FinOps view of Creatomate spend. Creatomate bills via monthly subscription
+  tiers that bundle a pool of rendering credits, storage, and feed rows. Cost
+  is driven by credit consumption per rendered output: one image is one credit,
+  and roughly fourteen credits per minute of 720p (25 fps) video, scaling with
+  resolution, frame rate, and length. Optimization centers on right-sizing
+  output dimensions, frame rate, and length, and on matching the plan tier to
+  monthly render volume.
+notes: >-
+  Per-plan dollar amounts render dynamically on the pricing page and vary by
+  billing cycle; verify during reconciliation. Credit-per-output rates are as
+  published.
+sources:
+- https://creatomate.com/pricing
+- https://creatomate.com/docs/api/quick-start/introduction
+- https://focus.finops.org/focus-specification/v1-3/
+alignedWith:
+  framework: FinOps Foundation Framework
+  frameworkUrl: https://www.finops.org/framework/
+  dataSpec: FOCUS
+  dataSpecVersion: '1.3'
+  dataSpecUrl: https://focus.finops.org/focus-specification/v1-3/
+publisherName: Creatomate
+serviceCategory: Media and Content
+billingModel:
+  pricingCategory: Subscription with Usage Credits
+  billingFrequency: Monthly
+  billingCurrency: USD
+  chargeCategories:
+  - Usage
+  - Purchase
+  - Adjustment
+focusColumns:
+  ServiceName: Creatomate
+  ServiceCategory: Media and Content
+  ProviderName: Creatomate
+  PublisherName: Creatomate
+  InvoiceIssuerName: Creatomate
+  BillingCurrency: USD
+  ChargeCategory: Usage
+  PricingCategory: Subscription with Usage Credits
+meters:
+- name: image_credits
+  description: Credits consumed by image renders, one credit per image.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - project
+  - template
+- name: video_credits
+  description: Credits consumed by video renders; about 14 credits per minute of 720p 25fps, scaling with resolution, frame rate, and length.
+  unit: credits
+  aggregation: sum
+  dimensions:
+  - project
+  - template
+- name: storage_gigabytes
+  description: Stored output and asset gigabytes against the plan storage allowance.
+  unit: gigabytes
+  aggregation: max
+  dimensions:
+  - project
+- name: feed_rows
+  description: Data feed rows used for spreadsheet/bulk generation against the plan allowance.
+  unit: rows
+  aggregation: sum
+  dimensions:
+  - project
+principles:
+- name: Visibility
+  description: Track credit burn per template and per project; watch monthly credit pool consumption against the plan allowance.
+- name: Allocation
+  description: Tag renders with metadata and use template tags to attribute credit spend to workloads, campaigns, or cost centers.
+- name: Optimization
+  description: Right-size output with render_scale, max_width/max_height, and frame_rate; cap video length; prefer images (1 credit) where motion is not required.
+- name: Accountability
+  description: Match the subscription tier to expected monthly render volume; review credit usage before each renewal and avoid overage by upgrading temporarily only when needed.
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com

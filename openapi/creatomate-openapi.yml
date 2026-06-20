@@ -1,0 +1,481 @@
+openapi: 3.0.1
+info:
+  title: Creatomate API
+  description: >-
+    REST API for the Creatomate media-automation platform. Generate videos and
+    images at scale by applying per-element modifications to reusable templates.
+    Renders run asynchronously; callers poll for status or receive a webhook when
+    each render reaches a terminal state. All requests are authenticated with a
+    project API key sent as a Bearer token.
+  termsOfService: https://creatomate.com/legal/terms
+  contact:
+    name: Creatomate Support
+    url: https://creatomate.com/contact
+  version: '1.0'
+servers:
+  - url: https://api.creatomate.com/v1
+    description: Creatomate REST API v1
+security:
+  - bearerAuth: []
+tags:
+  - name: Renders
+    description: Create renders and check their status.
+  - name: Templates
+    description: List and retrieve project templates.
+paths:
+  /renders:
+    post:
+      operationId: createRender
+      tags:
+        - Renders
+      summary: Create one or more renders
+      description: >-
+        Starts one or more renders. Provide a `template_id` or a `source` to
+        create a single render, or one or more `tags` to render every template
+        carrying those tags. The response is returned immediately with each
+        queued render in the `planned` state; the output is produced
+        asynchronously.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateRenderRequest'
+            examples:
+              byTemplate:
+                summary: Render a single template with modifications
+                value:
+                  template_id: 5b6a3c7e-2f1d-4a8b-9c0e-1d2f3a4b5c6d
+                  modifications:
+                    Text-1: 'Hi! Thanks for trying out Creatomate!'
+                    Video: https://creatomate-static.s3.amazonaws.com/demo/video5.mp4
+                  output_format: mp4
+                  webhook_url: https://example.com/webhooks/creatomate
+                  metadata: 'order-1234'
+      responses:
+        '202':
+          description: >-
+            Accepted. The renders have been queued. Returns an array of Render
+            objects in their initial state.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Render'
+        '400':
+          $ref: '#/components/responses/BadRequest'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    get:
+      operationId: listRenders
+      tags:
+        - Renders
+      summary: List renders
+      description: >-
+        Returns renders belonging to the project, most recent first. Supports
+        filtering by template and pagination.
+      parameters:
+        - name: template_id
+          in: query
+          required: false
+          description: Only return renders produced from this template.
+          schema:
+            type: string
+            format: uuid
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of renders to return.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
+      responses:
+        '200':
+          description: An array of Render objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Render'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /renders/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the render.
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getRender
+      tags:
+        - Renders
+      summary: Get the status of a render
+      description: >-
+        Returns the current state of a single render, including its `status`
+        and, once complete, the `url` of the produced file.
+      responses:
+        '200':
+          description: The requested Render object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Render'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+    delete:
+      operationId: deleteRender
+      tags:
+        - Renders
+      summary: Delete a render
+      description: Deletes a render and its associated output file.
+      responses:
+        '200':
+          description: The render was deleted.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Render'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /templates:
+    get:
+      operationId: listTemplates
+      tags:
+        - Templates
+      summary: Get all templates in a project
+      description: >-
+        Returns the metadata of every template in the project. This endpoint
+        does not return the RenderScript source of each template; use
+        `GET /templates/{id}` to retrieve a single template's source.
+      parameters:
+        - name: tags
+          in: query
+          required: false
+          description: Comma-separated list of tags used to filter templates.
+          schema:
+            type: string
+        - name: limit
+          in: query
+          required: false
+          description: Maximum number of templates to return.
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 100
+            default: 100
+      responses:
+        '200':
+          description: An array of Template objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Template'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /templates/{id}:
+    parameters:
+      - name: id
+        in: path
+        required: true
+        description: The unique identifier of the template.
+        schema:
+          type: string
+          format: uuid
+    get:
+      operationId: getTemplate
+      tags:
+        - Templates
+      summary: Get a template by its ID
+      description: >-
+        Returns a single template including its RenderScript `source`, which
+        describes the named elements that can be targeted by `modifications`
+        when creating a render.
+      responses:
+        '200':
+          description: The requested Template object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: >-
+        Project API key sent as `Authorization: Bearer <API_KEY>`. The key is
+        found in the project settings of the Creatomate dashboard.
+  responses:
+    BadRequest:
+      description: The request body was malformed or failed validation.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The API key is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded. Retry after backing off.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    CreateRenderRequest:
+      type: object
+      description: >-
+        Body for POST /renders. Supply exactly one of `template_id`, `source`,
+        or `tags` to select what is rendered.
+      properties:
+        template_id:
+          type: string
+          format: uuid
+          description: The template to render.
+        source:
+          type: object
+          description: >-
+            An inline RenderScript source object, used instead of a template_id
+            to render an ad-hoc design.
+          additionalProperties: true
+        tags:
+          type: array
+          description: >-
+            One or more template tags. Every template carrying any of these tags
+            is rendered, allowing batches to be started in one request.
+          items:
+            type: string
+        modifications:
+          type: object
+          description: >-
+            Map of element name to replacement value. Keys are the named
+            elements declared in the template (for example `Text-1`, `Video`);
+            values may be strings, numbers, URLs, or nested property objects.
+          additionalProperties: true
+        output_format:
+          type: string
+          description: The output file format. Defaults to the template's format.
+          enum:
+            - jpg
+            - png
+            - gif
+            - mp4
+        frame_rate:
+          type: number
+          description: Frame rate (fps) for video output. Defaults to the template's frame rate.
+        render_scale:
+          type: number
+          description: >-
+            Scale of the render relative to the template. 1.0 (the default)
+            produces the same dimensions as the template.
+          default: 1.0
+        max_width:
+          type: number
+          description: >-
+            Scales the render so its width never exceeds this value while
+            preserving aspect ratio. Overrides render_scale when set.
+        max_height:
+          type: number
+          description: >-
+            Scales the render so its height never exceeds this value while
+            preserving aspect ratio. Overrides render_scale when set.
+        webhook_url:
+          type: string
+          format: uri
+          description: >-
+            URL that Creatomate calls with an HTTP POST carrying the Render
+            object once the render succeeds or fails.
+        metadata:
+          type: string
+          description: >-
+            Arbitrary text stored with the render and echoed back in the Render
+            object and the webhook payload.
+      additionalProperties: false
+    Render:
+      type: object
+      description: A render job and, once complete, a pointer to its output file.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the render.
+        status:
+          $ref: '#/components/schemas/RenderStatus'
+        error_message:
+          type: string
+          nullable: true
+          description: Present only when status is `failed`; explains the failure.
+        url:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of the produced file once the render has succeeded.
+        snapshot_url:
+          type: string
+          format: uri
+          nullable: true
+          description: URL of a still preview image of the output.
+        template_id:
+          type: string
+          format: uuid
+          nullable: true
+          description: The template this render was produced from, if any.
+        template_name:
+          type: string
+          nullable: true
+          description: Name of the source template.
+        template_tags:
+          type: array
+          nullable: true
+          description: Tags of the source template.
+          items:
+            type: string
+        output_format:
+          type: string
+          description: The output file format.
+          enum:
+            - jpg
+            - png
+            - gif
+            - mp4
+        render_scale:
+          type: number
+          description: The scale applied relative to the template.
+        width:
+          type: integer
+          description: Output width in pixels.
+        height:
+          type: integer
+          description: Output height in pixels.
+        frame_rate:
+          type: number
+          nullable: true
+          description: Output frame rate in fps for video output.
+        duration:
+          type: number
+          nullable: true
+          description: Output duration in seconds for video output.
+        file_size:
+          type: integer
+          nullable: true
+          description: Size of the output file in bytes.
+        modifications:
+          type: object
+          nullable: true
+          description: The modifications that were applied to produce this render.
+          additionalProperties: true
+        metadata:
+          type: string
+          nullable: true
+          description: Caller-supplied metadata echoed back from the create request.
+      required:
+        - id
+        - status
+    RenderStatus:
+      type: string
+      description: >-
+        Lifecycle state of a render. `succeeded` and `failed` are terminal
+        states that trigger the webhook, if configured.
+      enum:
+        - planned
+        - waiting
+        - transcribing
+        - rendering
+        - succeeded
+        - failed
+    Template:
+      type: object
+      description: A reusable design that renders can be produced from.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the template.
+        name:
+          type: string
+          description: Display name of the template.
+        tags:
+          type: array
+          description: Tags assigned to the template.
+          items:
+            type: string
+        width:
+          type: integer
+          nullable: true
+          description: Template width in pixels.
+        height:
+          type: integer
+          nullable: true
+          description: Template height in pixels.
+        frame_rate:
+          type: number
+          nullable: true
+          description: Template frame rate in fps.
+        duration:
+          type: number
+          nullable: true
+          description: Template duration in seconds.
+        source:
+          type: object
+          nullable: true
+          description: >-
+            The RenderScript source of the template. Returned by
+            GET /templates/{id} but omitted from the list endpoint.
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+          description: When the template was created.
+        modified_at:
+          type: string
+          format: date-time
+          description: When the template was last modified.
+      required:
+        - id
+        - name
+    Error:
+      type: object
+      description: Error response payload.
+      properties:
+        hint:
+          type: string
+          description: Human-readable description of the error.
+      additionalProperties: true

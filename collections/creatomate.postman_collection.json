@@ -1,0 +1,187 @@
+{
+  "info": {
+    "name": "Creatomate API",
+    "description": "REST API for the Creatomate media-automation platform. Generate videos and images at scale by applying per-element modifications to reusable templates. Renders run asynchronously; poll for status or receive a webhook. Authenticate with a project API key sent as a Bearer token.",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{api_key}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "https://api.creatomate.com/v1",
+      "type": "string"
+    },
+    {
+      "key": "api_key",
+      "value": "YOUR_API_KEY",
+      "type": "string"
+    },
+    {
+      "key": "template_id",
+      "value": "YOUR_TEMPLATE_ID",
+      "type": "string"
+    },
+    {
+      "key": "render_id",
+      "value": "YOUR_RENDER_ID",
+      "type": "string"
+    }
+  ],
+  "item": [
+    {
+      "name": "Renders",
+      "item": [
+        {
+          "name": "Create a render",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "url": {
+              "raw": "{{base_url}}/renders",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "renders"
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template_id\": \"{{template_id}}\",\n  \"modifications\": {\n    \"Text-1\": \"Hi! Thanks for trying out Creatomate!\",\n    \"Video\": \"https://creatomate-static.s3.amazonaws.com/demo/video5.mp4\"\n  },\n  \"output_format\": \"mp4\",\n  \"webhook_url\": \"https://example.com/webhooks/creatomate\",\n  \"metadata\": \"order-1234\"\n}"
+            },
+            "description": "Start one or more renders. Provide a template_id or source for a single render, or one or more tags to render every template carrying those tags. Returns 202 Accepted with the queued renders in the planned state."
+          }
+        },
+        {
+          "name": "List renders",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/renders?limit=100",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "renders"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "100"
+                },
+                {
+                  "key": "template_id",
+                  "value": "{{template_id}}",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "List renders in the project, most recent first. Optionally filter by template_id."
+          }
+        },
+        {
+          "name": "Get the status of a render",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/renders/{{render_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "renders",
+                "{{render_id}}"
+              ]
+            },
+            "description": "Return a single render, including its status and, once complete, the url of the output file. Status is one of planned, waiting, transcribing, rendering, succeeded, failed."
+          }
+        },
+        {
+          "name": "Delete a render",
+          "request": {
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/renders/{{render_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "renders",
+                "{{render_id}}"
+              ]
+            },
+            "description": "Delete a render and its associated output file."
+          }
+        }
+      ]
+    },
+    {
+      "name": "Templates",
+      "item": [
+        {
+          "name": "Get all templates in a project",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/templates?limit=100",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "templates"
+              ],
+              "query": [
+                {
+                  "key": "limit",
+                  "value": "100"
+                },
+                {
+                  "key": "tags",
+                  "value": "",
+                  "disabled": true
+                }
+              ]
+            },
+            "description": "Return the metadata of every template in the project. Does not include each template's RenderScript source."
+          }
+        },
+        {
+          "name": "Get a template by its ID",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "{{base_url}}/templates/{{template_id}}",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "templates",
+                "{{template_id}}"
+              ]
+            },
+            "description": "Return a single template including its RenderScript source, which describes the named elements available for modification at render time."
+          }
+        }
+      ]
+    }
+  ]
+}

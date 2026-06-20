@@ -1,0 +1,74 @@
+aid: creatomate
+name: Creatomate
+review:
+  question: Does Creatomate expose a documented public WebSocket or streaming API?
+  answer: false
+  date: '2026-06-20'
+  reviewer: API Evangelist
+  asyncapiSpecCreated: false
+  asyncapiScopeNote: |
+    Creatomate's asynchronous surface is delivered as outbound HTTP webhook
+    callbacks, not as a WebSocket, SSE stream, or message broker that the
+    client subscribes to. Per current API Evangelist scope, AsyncAPI modeling
+    targets event/stream transports the client connects to (WebSocket, SSE,
+    broker channels). A one-shot HTTP POST callback per render is documented
+    in the OpenAPI as the webhook_url request parameter rather than as a
+    separate AsyncAPI document, so no AsyncAPI artifact was authored.
+findings:
+  summary: |
+    Creatomate does not publish a documented public WebSocket or streaming
+    API. The platform exposes a REST (HTTPS) API under
+    https://api.creatomate.com/v1 authenticated with a project API key sent
+    as a Bearer token. Renders are asynchronous: a POST /renders call returns
+    202 Accepted with renders in the planned state, and completion is observed
+    either by polling GET /renders/{id} or by receiving an outbound HTTP POST
+    webhook carrying the full Render object. The webhook is a server-to-client
+    HTTP callback, not a bidirectional or long-lived streaming connection.
+  transports:
+    - protocol: REST
+      scheme: https
+      baseURL: https://api.creatomate.com/v1
+      documented: true
+    - protocol: Webhook
+      scheme: https
+      note: Outbound HTTP POST to the caller-supplied webhook_url when a render reaches succeeded or failed. Payload is the Render object including any caller metadata. Not WebSocket.
+      documented: true
+    - protocol: WebSocket
+      scheme: wss
+      documented: false
+      note: No WebSocket endpoint is documented in Creatomate's API reference for renders, templates, or any other resource as of the review date.
+  endpointsConfirmedRest:
+    - POST   https://api.creatomate.com/v1/renders
+    - GET    https://api.creatomate.com/v1/renders
+    - GET    https://api.creatomate.com/v1/renders/{id}
+    - DELETE https://api.creatomate.com/v1/renders/{id}
+    - GET    https://api.creatomate.com/v1/templates
+    - GET    https://api.creatomate.com/v1/templates/{id}
+  renderStatusValues:
+    - planned
+    - waiting
+    - transcribing
+    - rendering
+    - succeeded
+    - failed
+sources:
+  - url: https://creatomate.com/docs/api/reference/introduction
+    type: APIReference
+    note: REST reference; base URL https://api.creatomate.com/v1, Bearer API key auth.
+  - url: https://creatomate.com/docs/api/reference/create-a-render
+    type: APIReference
+    note: POST /renders request parameters (template_id, modifications, render_scale, max_width, max_height, webhook_url, metadata).
+  - url: https://creatomate.com/docs/api/rest-api/the-render-object
+    type: Documentation
+    note: Render object fields and the planned/waiting/transcribing/rendering/succeeded/failed status lifecycle.
+  - url: https://creatomate.com/docs/api/rest-api/webhooks
+    type: Documentation
+    note: Webhook is an outbound HTTP POST of the Render object on terminal status; no WebSocket surface.
+actions:
+  asyncapiPath: null
+  apisYmlUpdated: true
+  reason: |
+    No WebSocket or client-subscribed streaming surface exists. The render
+    webhook is modeled inline in the OpenAPI as the webhook_url parameter and
+    documented as the Creatomate Webhooks API in apis.yml, so no AsyncAPI
+    document was authored.

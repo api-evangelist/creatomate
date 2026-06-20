@@ -1,0 +1,208 @@
+specification: API Commons Plans
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/Plans
+provider: Creatomate
+providerId: creatomate
+created: '2026-06-20'
+modified: '2026-06-20'
+reconciled: true
+tags:
+- Media
+- Video Generation
+- Image Generation
+- Automation
+- Templates
+- Rendering
+- Plans
+description: >-
+  Creatomate sells monthly subscription tiers that each include a pool of
+  rendering credits plus storage and feed-row allowances. Credits are consumed
+  per rendered output: one image is one credit, and roughly one minute of 720p
+  (25 fps) video is about fourteen credits, scaling with resolution, frame rate,
+  and length. Plans differ by included credits, video/image volume, storage, and
+  feed rows. A free trial grants 50 credits with no credit card.
+notes: >-
+  Monthly prices are not enumerated here because Creatomate's pricing page
+  renders them dynamically and varies them by billing cycle (monthly vs.
+  annual) and by credit pack. Verify current dollar amounts on the pricing
+  page during reconciliation. Credit consumption rates and plan inclusions are
+  as published.
+sources:
+- https://creatomate.com/pricing
+- https://creatomate.com/docs/api/quick-start/introduction
+plans:
+- id: creatomate-free-trial
+  name: Free Trial
+  type: trial
+  description: >-
+    50 credits to evaluate the platform with no credit card required.
+  entries:
+  - label: Trial Credits
+    name: trial_credits
+    type: free
+    metric: credits
+    limit: 50
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: free
+    userMultiplied: false
+  elements:
+  - name: Renders
+  - name: Templates
+- id: creatomate-essential
+  name: Essential
+  type: subscription
+  description: >-
+    Entry plan for individuals. Includes 2,000 credits (about 200+ videos or
+    2,000 images), 5 GB storage, and 1,000 feed rows.
+  entries:
+  - label: Included Credits
+    name: essential_credits
+    type: subscription
+    metric: credits
+    limit: 2000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: see pricing page
+    userMultiplied: false
+  - label: Storage
+    name: essential_storage
+    type: subscription
+    metric: gigabytes
+    limit: 5
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Feed Rows
+    name: essential_feed_rows
+    type: subscription
+    metric: rows
+    limit: 1000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  elements:
+  - name: Renders
+  - name: Templates
+  - name: Webhooks
+- id: creatomate-growth
+  name: Growth
+  type: subscription
+  description: >-
+    Most popular plan for startups and small teams. Includes 10,000-40,000
+    credits depending on billing cycle (about 1,000+ videos or 10,000 images),
+    50 GB storage, and 10,000 feed rows.
+  entries:
+  - label: Included Credits
+    name: growth_credits
+    type: subscription
+    metric: credits
+    limit: 40000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: see pricing page
+    userMultiplied: false
+  - label: Storage
+    name: growth_storage
+    type: subscription
+    metric: gigabytes
+    limit: 50
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Feed Rows
+    name: growth_feed_rows
+    type: subscription
+    metric: rows
+    limit: 10000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  elements:
+  - name: Renders
+  - name: Templates
+  - name: Webhooks
+- id: creatomate-beyond
+  name: Beyond
+  type: subscription
+  description: >-
+    Plan for scale-ups and fast-growing companies. Includes 50,000-200,000
+    credits depending on billing cycle (about 5,000+ videos or 50,000 images),
+    500 GB storage, and 100,000 feed rows.
+  entries:
+  - label: Included Credits
+    name: beyond_credits
+    type: subscription
+    metric: credits
+    limit: 200000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: see pricing page
+    userMultiplied: false
+  - label: Storage
+    name: beyond_storage
+    type: subscription
+    metric: gigabytes
+    limit: 500
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  - label: Feed Rows
+    name: beyond_feed_rows
+    type: subscription
+    metric: rows
+    limit: 100000
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: included
+    userMultiplied: false
+  elements:
+  - name: Renders
+  - name: Templates
+  - name: Webhooks
+- id: creatomate-credit-model
+  name: Credit Consumption
+  type: usage
+  description: >-
+    How included credits are spent per rendered output, across all plans.
+  entries:
+  - label: Image Render
+    name: image_credit
+    type: usage
+    metric: credits
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: 1 credit per image
+    userMultiplied: false
+  - label: Video Render
+    name: video_credit
+    type: usage
+    metric: credits
+    limit: -1
+    timeFrame: month
+    geo: global
+    unit: 1
+    price: about 14 credits per minute of 720p 25fps video; scales with resolution, frame rate, and length
+    userMultiplied: false
+  elements:
+  - name: Renders
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
