@@ -1,0 +1,14 @@
+generated: '2026-07-11'
+method: derived
+source: openapi/creatomate-openapi.yml
+summary:
+  types:
+  - http
+schemes:
+- name: bearerAuth
+  type: http
+  scheme: bearer
+  description: 'Project API key sent as `Authorization: Bearer <API_KEY>`. The key is found
+    in the project settings of the Creatomate dashboard.'
+  sources:
+  - openapi/creatomate-openapi.yml

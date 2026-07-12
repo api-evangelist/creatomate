@@ -86,6 +86,10 @@ apis:
     and Creatomate POSTs the full Render object (including any caller-supplied metadata)
     to that URL once the render reaches a terminal succeeded or failed state.
 common:
+- type: DomainSecurity
+  url: security/creatomate-domain-security.yml
+- type: Authentication
+  url: authentication/creatomate-authentication.yml
 - type: GitHubOrganization
   url: https://github.com/creatomate
 - type: LinkedIn
