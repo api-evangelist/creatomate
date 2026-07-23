@@ -1,0 +1,164 @@
+openapi: 3.0.1
+info:
+  title: Creatomate Renders Templates API
+  description: REST API for the Creatomate media-automation platform. Generate videos and images at scale by applying per-element modifications to reusable templates. Renders run asynchronously; callers poll for status or receive a webhook when each render reaches a terminal state. All requests are authenticated with a project API key sent as a Bearer token.
+  termsOfService: https://creatomate.com/legal/terms
+  contact:
+    name: Creatomate Support
+    url: https://creatomate.com/contact
+  version: '1.0'
+servers:
+- url: https://api.creatomate.com/v1
+  description: Creatomate REST API v1
+security:
+- bearerAuth: []
+tags:
+- name: Templates
+  description: List and retrieve project templates.
+paths:
+  /templates:
+    get:
+      operationId: listTemplates
+      tags:
+      - Templates
+      summary: Get all templates in a project
+      description: Returns the metadata of every template in the project. This endpoint does not return the RenderScript source of each template; use `GET /templates/{id}` to retrieve a single template's source.
+      parameters:
+      - name: tags
+        in: query
+        required: false
+        description: Comma-separated list of tags used to filter templates.
+        schema:
+          type: string
+      - name: limit
+        in: query
+        required: false
+        description: Maximum number of templates to return.
+        schema:
+          type: integer
+          minimum: 1
+          maximum: 100
+          default: 100
+      responses:
+        '200':
+          description: An array of Template objects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Template'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+  /templates/{id}:
+    parameters:
+    - name: id
+      in: path
+      required: true
+      description: The unique identifier of the template.
+      schema:
+        type: string
+        format: uuid
+    get:
+      operationId: getTemplate
+      tags:
+      - Templates
+      summary: Get a template by its ID
+      description: Returns a single template including its RenderScript `source`, which describes the named elements that can be targeted by `modifications` when creating a render.
+      responses:
+        '200':
+          description: The requested Template object.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Template'
+        '401':
+          $ref: '#/components/responses/Unauthorized'
+        '404':
+          $ref: '#/components/responses/NotFound'
+        '429':
+          $ref: '#/components/responses/TooManyRequests'
+components:
+  responses:
+    TooManyRequests:
+      description: Rate limit exceeded. Retry after backing off.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    Unauthorized:
+      description: The API key is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    NotFound:
+      description: The requested resource does not exist.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+  schemas:
+    Error:
+      type: object
+      description: Error response payload.
+      properties:
+        hint:
+          type: string
+          description: Human-readable description of the error.
+      additionalProperties: true
+    Template:
+      type: object
+      description: A reusable design that renders can be produced from.
+      properties:
+        id:
+          type: string
+          format: uuid
+          description: Unique identifier of the template.
+        name:
+          type: string
+          description: Display name of the template.
+        tags:
+          type: array
+          description: Tags assigned to the template.
+          items:
+            type: string
+        width:
+          type: integer
+          nullable: true
+          description: Template width in pixels.
+        height:
+          type: integer
+          nullable: true
+          description: Template height in pixels.
+        frame_rate:
+          type: number
+          nullable: true
+          description: Template frame rate in fps.
+        duration:
+          type: number
+          nullable: true
+          description: Template duration in seconds.
+        source:
+          type: object
+          nullable: true
+          description: The RenderScript source of the template. Returned by GET /templates/{id} but omitted from the list endpoint.
+          additionalProperties: true
+        created_at:
+          type: string
+          format: date-time
+          description: When the template was created.
+        modified_at:
+          type: string
+          format: date-time
+          description: When the template was last modified.
+      required:
+      - id
+      - name
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      description: 'Project API key sent as `Authorization: Bearer <API_KEY>`. The key is found in the project settings of the Creatomate dashboard.'
