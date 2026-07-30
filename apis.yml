@@ -6,7 +6,20 @@ description: Creatomate is a media-automation platform that generates videos and
   at scale from reusable templates. Its REST API renders MP4/GIF/image output by
   applying per-element modifications to a template, runs asynchronously, and notifies
   callers via polling or webhooks. Billing is credit-based per rendered output.
-image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+accessModel:
+  pricing: freemium
+  onboarding: open
+  trial: true
+  try_now: true
+  public: true
+  label: Freemium (free trial) · Open access
+  confidence: high
+  source:
+  - plans
+  - authentication
+  generated: '2026-07-22'
+  method: derived
+image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/creatomate.png
 tags:
 - Media
 - Video Generation
@@ -18,73 +31,58 @@ created: '2026-06-20'
 modified: '2026-06-20'
 specificationVersion: '0.19'
 apis:
-- aid: creatomate:renders
+- aid: creatomate:creatomate-renders-api
   name: Creatomate Renders API
-  tags:
-  - Renders
-  - Video
-  - Image
-  - Async
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
+  description: Create renders and check their status.
   humanURL: https://creatomate.com/docs/api/reference/introduction
   baseURL: https://api.creatomate.com/v1
+  tags:
+  - Renders
   properties:
-  - url: https://creatomate.com/docs/api/quick-start/introduction
-    type: Documentation
-  - url: https://creatomate.com/docs/api/reference/create-a-render
-    type: APIReference
-  - url: openapi/creatomate-openapi.yml
-    type: OpenAPI
-  - url: collections/creatomate.postman_collection.json
-    type: PostmanCollection
-  - url: collections/creatomate.opencollection.json
-    type: OpenCollection
-  description: Create one or more renders from a template ID, source, or template tags,
-    applying per-element modifications, then poll for status or receive a webhook
-    when each render succeeds or fails. Output is MP4, GIF, JPG, or PNG hosted by
-    Creatomate.
-- aid: creatomate:templates
+  - type: OpenAPI
+    url: openapi/creatomate-renders-api-openapi.yml
+  - type: Documentation
+    url: https://creatomate.com/docs/api/quick-start/introduction
+  - type: APIReference
+    url: https://creatomate.com/docs/api/reference/create-a-render
+  - type: PostmanCollection
+    url: collections/creatomate.postman_collection.json
+  - type: OpenCollection
+    url: collections/creatomate.opencollection.json
+  - type: Documentation
+    url: https://creatomate.com/docs/api/reference/get-all-templates-in-a-project
+  - type: APIReference
+    url: https://creatomate.com/docs/api/reference/get-a-template-by-its-id
+  - type: Documentation
+    url: https://creatomate.com/docs/api/rest-api/webhooks
+  - type: APIReference
+    url: https://creatomate.com/docs/api/reference/set-up-a-webhook
+- aid: creatomate:creatomate-templates-api
   name: Creatomate Templates API
+  description: List and retrieve project templates.
+  humanURL: https://creatomate.com/docs/api/reference/introduction
+  baseURL: https://api.creatomate.com/v1
   tags:
   - Templates
-  - Catalog
-  - Metadata
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://creatomate.com/docs/api/reference/get-all-templates-in-a-project
-  baseURL: https://api.creatomate.com/v1
   properties:
-  - url: https://creatomate.com/docs/api/reference/get-all-templates-in-a-project
-    type: Documentation
-  - url: https://creatomate.com/docs/api/reference/get-a-template-by-its-id
-    type: APIReference
-  - url: openapi/creatomate-openapi.yml
-    type: OpenAPI
-  - url: collections/creatomate.postman_collection.json
-    type: PostmanCollection
-  - url: collections/creatomate.opencollection.json
-    type: OpenCollection
-  description: List the templates in a project with their metadata and tags, and fetch
-    a single template by ID including its RenderScript source, which describes the
-    named elements available for modification at render time.
-- aid: creatomate:webhooks
-  name: Creatomate Webhooks
-  tags:
-  - Webhooks
-  - Async
-  - Notifications
-  image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/apis-json-logo.jpg
-  humanURL: https://creatomate.com/docs/api/rest-api/webhooks
-  baseURL: https://api.creatomate.com/v1
-  properties:
-  - url: https://creatomate.com/docs/api/rest-api/webhooks
-    type: Documentation
-  - url: https://creatomate.com/docs/api/reference/set-up-a-webhook
-    type: APIReference
-  - url: openapi/creatomate-openapi.yml
-    type: OpenAPI
-  description: Per-render callback delivery. Supply webhook_url when creating a render
-    and Creatomate POSTs the full Render object (including any caller-supplied metadata)
-    to that URL once the render reaches a terminal succeeded or failed state.
+  - type: OpenAPI
+    url: openapi/creatomate-templates-api-openapi.yml
+  - type: Documentation
+    url: https://creatomate.com/docs/api/quick-start/introduction
+  - type: APIReference
+    url: https://creatomate.com/docs/api/reference/create-a-render
+  - type: PostmanCollection
+    url: collections/creatomate.postman_collection.json
+  - type: OpenCollection
+    url: collections/creatomate.opencollection.json
+  - type: Documentation
+    url: https://creatomate.com/docs/api/reference/get-all-templates-in-a-project
+  - type: APIReference
+    url: https://creatomate.com/docs/api/reference/get-a-template-by-its-id
+  - type: Documentation
+    url: https://creatomate.com/docs/api/rest-api/webhooks
+  - type: APIReference
+    url: https://creatomate.com/docs/api/reference/set-up-a-webhook
 common:
 - type: AgenticAccess
   url: agentic-access/creatomate-agentic-access.yml
