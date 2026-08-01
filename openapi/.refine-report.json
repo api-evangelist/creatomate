@@ -1,0 +1,16 @@
+{
+  "provider": "creatomate",
+  "sources": [
+    "creatomate-renders-api-openapi.yml",
+    "creatomate-templates-api-openapi.yml"
+  ],
+  "outputs": [
+    "creatomate-renders-api-openapi.yml",
+    "creatomate-templates-api-openapi.yml"
+  ],
+  "archived": [],
+  "errors": [],
+  "warnings": [],
+  "notes": [],
+  "skipped": []
+}
