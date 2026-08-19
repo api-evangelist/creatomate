@@ -1,0 +1,102 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Creatomate Renders API",
+    "version": "1.0"
+  },
+  "request": {
+    "auth": {
+      "type": "bearer",
+      "token": "{{bearerToken}}"
+    }
+  },
+  "items": [
+    {
+      "info": {
+        "name": "Renders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "List renders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.creatomate.com/v1/renders",
+            "params": [
+              {
+                "name": "template_id",
+                "value": "",
+                "type": "query",
+                "description": "Only return renders produced from this template."
+              },
+              {
+                "name": "limit",
+                "value": "",
+                "type": "query",
+                "description": "Maximum number of renders to return."
+              }
+            ]
+          },
+          "docs": "Returns renders belonging to the project, most recent first. Supports filtering by template and pagination."
+        },
+        {
+          "info": {
+            "name": "Create one or more renders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.creatomate.com/v1/renders",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Starts one or more renders. Provide a `template_id` or a `source` to create a single render, or one or more `tags` to render every template carrying those tags. The response is returned immediately with each queued render in the `planned` state; the output is produced asynchronously."
+        },
+        {
+          "info": {
+            "name": "Get the status of a render",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.creatomate.com/v1/renders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the render."
+              }
+            ]
+          },
+          "docs": "Returns the current state of a single render, including its `status` and, once complete, the `url` of the produced file."
+        },
+        {
+          "info": {
+            "name": "Delete a render",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.creatomate.com/v1/renders/:id",
+            "params": [
+              {
+                "name": "id",
+                "value": "",
+                "type": "path",
+                "description": "The unique identifier of the render."
+              }
+            ]
+          },
+          "docs": "Deletes a render and its associated output file."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

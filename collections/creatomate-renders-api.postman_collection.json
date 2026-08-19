@@ -1,0 +1,1001 @@
+{
+  "item": [
+    {
+      "id": "281e5a23-143e-43b6-8105-cc7694b26243",
+      "name": "Renders",
+      "description": {
+        "content": "Create renders and check their status.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "c99131b9-e8c4-432f-b255-3bdc6b9dfccb",
+          "name": "Create one or more renders",
+          "request": {
+            "name": "Create one or more renders",
+            "description": {
+              "content": "Starts one or more renders. Provide a `template_id` or a `source` to create a single render, or one or more `tags` to render every template carrying those tags. The response is returned immediately with each queued render in the `planned` state; the output is produced asynchronously.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "renders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": null,
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"template_id\": \"<uuid>\",\n  \"source\": {\n    \"key_0\": 8686,\n    \"key_1\": 8348\n  },\n  \"tags\": [\n    \"<string>\",\n    \"<string>\"\n  ],\n  \"modifications\": {\n    \"key_0\": \"string\"\n  },\n  \"output_format\": \"<string>\",\n  \"frame_rate\": \"<number>\",\n  \"render_scale\": 1,\n  \"max_width\": \"<number>\",\n  \"max_height\": \"<number>\",\n  \"webhook_url\": \"<uri>\",\n  \"metadata\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "301bc1aa-272e-48f0-876f-abdde38dd75b",
+              "name": "Accepted. The renders have been queued. Returns an array of Render objects in their initial state.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template_id\": \"5b6a3c7e-2f1d-4a8b-9c0e-1d2f3a4b5c6d\",\n  \"modifications\": {\n    \"Text-1\": \"Hi! Thanks for trying out Creatomate!\",\n    \"Video\": \"https://creatomate-static.s3.amazonaws.com/demo/video5.mp4\"\n  },\n  \"output_format\": \"mp4\",\n  \"webhook_url\": \"https://example.com/webhooks/creatomate\",\n  \"metadata\": \"order-1234\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Accepted",
+              "code": 202,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"673695ef-10f4-0f78-75be-a5b7b4340c3b\",\n    \"status\": \"waiting\",\n    \"error_message\": \"string\",\n    \"url\": \"http://PqqNZnvZB.fgsIIh6E9qN6mHBsNIJkugZlH-pj2pCU9OdqPlsJ\",\n    \"snapshot_url\": \"http://LDe.sfmuKL.bIXPyPF6V\",\n    \"template_id\": \"c8109035-fa7c-1cc2-43a6-06bea130e916\",\n    \"template_name\": \"string\",\n    \"template_tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output_format\": \"jpg\",\n    \"render_scale\": 3122.0471765088932,\n    \"width\": 4247,\n    \"height\": 8923,\n    \"frame_rate\": 9774.814805887512,\n    \"duration\": 5464.915157546967,\n    \"file_size\": 3605,\n    \"modifications\": {\n      \"key_0\": \"string\",\n      \"key_1\": \"string\"\n    },\n    \"metadata\": \"string\"\n  },\n  {\n    \"id\": \"2ea9e0ba-3d18-453b-baa2-9a2aada7e737\",\n    \"status\": \"succeeded\",\n    \"error_message\": \"string\",\n    \"url\": \"https://sQVeh.oiMjcJGltz.X+wiuUwlTfCJHpUZAu0pBsV+ACK-\",\n    \"snapshot_url\": \"http://BHGgQcnVgmEvOrpoWBuAh.roswM+iraHEKDB88iare4Yl3cS9KRkLgGjzSNd.XnVFFOA0XVfN5MA-ss-qq0FVmjYKIj2lt40TkYEX\",\n    \"template_id\": \"84c34013-dac4-03a3-4d2a-1a5d4a10f5da\",\n    \"template_name\": \"string\",\n    \"template_tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output_format\": \"mp4\",\n    \"render_scale\": 4310.614078853488,\n    \"width\": 2438,\n    \"height\": 2660,\n    \"frame_rate\": 4576.370878444457,\n    \"duration\": 1194.4137362051345,\n    \"file_size\": 2310,\n    \"modifications\": {\n      \"key_0\": \"string\",\n      \"key_1\": 8719.250212337018,\n      \"key_2\": false\n    },\n    \"metadata\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6079905-9c67-4ce5-a635-ef4e05e1f7be",
+              "name": "The request body was malformed or failed validation.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template_id\": \"5b6a3c7e-2f1d-4a8b-9c0e-1d2f3a4b5c6d\",\n  \"modifications\": {\n    \"Text-1\": \"Hi! Thanks for trying out Creatomate!\",\n    \"Video\": \"https://creatomate-static.s3.amazonaws.com/demo/video5.mp4\"\n  },\n  \"output_format\": \"mp4\",\n  \"webhook_url\": \"https://example.com/webhooks/creatomate\",\n  \"metadata\": \"order-1234\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "76e36937-d51e-492d-aebc-55ff4d2bc213",
+              "name": "The API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template_id\": \"5b6a3c7e-2f1d-4a8b-9c0e-1d2f3a4b5c6d\",\n  \"modifications\": {\n    \"Text-1\": \"Hi! Thanks for trying out Creatomate!\",\n    \"Video\": \"https://creatomate-static.s3.amazonaws.com/demo/video5.mp4\"\n  },\n  \"output_format\": \"mp4\",\n  \"webhook_url\": \"https://example.com/webhooks/creatomate\",\n  \"metadata\": \"order-1234\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "cce48374-c475-43aa-9215-3749a0dc90f3",
+              "name": "Rate limit exceeded. Retry after backing off.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"template_id\": \"5b6a3c7e-2f1d-4a8b-9c0e-1d2f3a4b5c6d\",\n  \"modifications\": {\n    \"Text-1\": \"Hi! Thanks for trying out Creatomate!\",\n    \"Video\": \"https://creatomate-static.s3.amazonaws.com/demo/video5.mp4\"\n  },\n  \"output_format\": \"mp4\",\n  \"webhook_url\": \"https://example.com/webhooks/creatomate\",\n  \"metadata\": \"order-1234\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0f1eeb3f-753e-4411-bd89-484e322c2ce5",
+          "name": "List renders",
+          "request": {
+            "name": "List renders",
+            "description": {
+              "content": "Returns renders belonging to the project, most recent first. Supports filtering by template and pagination.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "renders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "template_id",
+                  "value": "<uuid>",
+                  "description": "Only return renders produced from this template."
+                },
+                {
+                  "disabled": false,
+                  "key": "limit",
+                  "value": "100",
+                  "description": "Maximum number of renders to return."
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "21d9ae9d-7c66-4f02-9e71-325b8fa1be98",
+              "name": "An array of Render objects.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "template_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"id\": \"a5aaa8dd-96cd-a5af-1654-f4e0ca044c14\",\n    \"status\": \"transcribing\",\n    \"error_message\": \"string\",\n    \"url\": \"https://JasodCdYLkrSZ.intplWf4KkHBopLD02R5JKsTETyWpLgzQ0OyTKXwq,2tpoUpq-fMx4jhpOJjd5\",\n    \"snapshot_url\": \"http://CqUk.rgoCgP-IygkFlK5YUoMlreSs0bCrSwo,iz9S9Wz.UsMM3d\",\n    \"template_id\": \"562e2955-942a-9751-1fb9-429c6a20503e\",\n    \"template_name\": \"string\",\n    \"template_tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output_format\": \"jpg\",\n    \"render_scale\": 7310.281907248267,\n    \"width\": 1436,\n    \"height\": 7162,\n    \"frame_rate\": 6643.087450901031,\n    \"duration\": 3923.516989210044,\n    \"file_size\": 3779,\n    \"modifications\": {\n      \"key_0\": true,\n      \"key_1\": true\n    },\n    \"metadata\": \"string\"\n  },\n  {\n    \"id\": \"903db396-a55a-0ddd-2345-ce7743adcb4f\",\n    \"status\": \"transcribing\",\n    \"error_message\": \"string\",\n    \"url\": \"https://RpPXXnWCOSVTliULZtpCvNCo.mlJFNTqm7SbUhRDzHf.iNMrrdfKqSAXpOgzpp33Y\",\n    \"snapshot_url\": \"http://qtaqsupOfnCVrjBMvyM.gxUrnbWPzBLDN3xi2vFGxFeuSoktHsTgtXhLx5nuJcAHNfz+OMkckKwDROukONZOmI\",\n    \"template_id\": \"f994a9eb-2bae-fda1-76fb-c7d63e011fa4\",\n    \"template_name\": \"string\",\n    \"template_tags\": [\n      \"string\",\n      \"string\"\n    ],\n    \"output_format\": \"png\",\n    \"render_scale\": 7157.171468183738,\n    \"width\": 7578,\n    \"height\": 1165,\n    \"frame_rate\": 6403.345828391442,\n    \"duration\": 8022.737475189206,\n    \"file_size\": 4572,\n    \"modifications\": {\n      \"key_0\": 9290.56304118065\n    },\n    \"metadata\": \"string\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fde36988-e665-4a02-938b-97e19be7a905",
+              "name": "The API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "template_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e4d5ebeb-6b7c-4ef9-9756-fcbfcaba7cae",
+              "name": "Rate limit exceeded. Retry after backing off.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "template_id",
+                      "value": "<uuid>"
+                    },
+                    {
+                      "key": "limit",
+                      "value": "100"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "84250e76-8173-47b7-ae7b-d0aa6aaff2f3",
+          "name": "Get the status of a render",
+          "request": {
+            "name": "Get the status of a render",
+            "description": {
+              "content": "Returns the current state of a single render, including its `status` and, once complete, the `url` of the produced file.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "renders",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the render."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "701cee65-c46b-4c1b-8d67-30d587025019",
+              "name": "The requested Render object.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the render."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"30a43fc6-4e9a-6033-ab8c-69a7b2e7e67c\",\n  \"status\": \"transcribing\",\n  \"error_message\": \"string\",\n  \"url\": \"http://bRAaJpOXsxXiuqjcdqnAWfRsUXEtFo.rajiHcwrhn81oulUBBy1z.0WYKa8.vGhP7VhRBO3,Syn-Jq5FvxrnM,l+5vw7UAzuNWsxANn\",\n  \"snapshot_url\": \"http://xAoKKgXgVtjqRHm.vdVK0AYbcyHNl3RbMdHCXEmWECwkKDkHl4,fZiIjs,3OwqVqKKXXQESw374uH\",\n  \"template_id\": \"38dd2875-9a25-30ff-a4db-14b06d592611\",\n  \"template_name\": \"string\",\n  \"template_tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"output_format\": \"mp4\",\n  \"render_scale\": 7089.767641835401,\n  \"width\": 1902,\n  \"height\": 7811,\n  \"frame_rate\": 6923.739826924101,\n  \"duration\": 8275.514948851363,\n  \"file_size\": 8914,\n  \"modifications\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  },\n  \"metadata\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0a8af11b-cc18-4379-a522-5c5e7a573895",
+              "name": "The API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the render."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c9046767-11d7-4e93-beaa-10360f44548f",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the render."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fd1d0346-fee1-4106-96ed-edb8950fd175",
+              "name": "Rate limit exceeded. Retry after backing off.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the render."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "840e70ce-7cb8-489f-8bfe-36ffc50f4945",
+          "name": "Delete a render",
+          "request": {
+            "name": "Delete a render",
+            "description": {
+              "content": "Deletes a render and its associated output file.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "renders",
+                ":id"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<uuid>",
+                  "key": "id",
+                  "description": "(Required) The unique identifier of the render."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "DELETE",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "9b913bbb-1a76-401e-a50f-1830dc9068bd",
+              "name": "The render was deleted.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the render."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"id\": \"30a43fc6-4e9a-6033-ab8c-69a7b2e7e67c\",\n  \"status\": \"transcribing\",\n  \"error_message\": \"string\",\n  \"url\": \"http://bRAaJpOXsxXiuqjcdqnAWfRsUXEtFo.rajiHcwrhn81oulUBBy1z.0WYKa8.vGhP7VhRBO3,Syn-Jq5FvxrnM,l+5vw7UAzuNWsxANn\",\n  \"snapshot_url\": \"http://xAoKKgXgVtjqRHm.vdVK0AYbcyHNl3RbMdHCXEmWECwkKDkHl4,fZiIjs,3OwqVqKKXXQESw374uH\",\n  \"template_id\": \"38dd2875-9a25-30ff-a4db-14b06d592611\",\n  \"template_name\": \"string\",\n  \"template_tags\": [\n    \"string\",\n    \"string\"\n  ],\n  \"output_format\": \"mp4\",\n  \"render_scale\": 7089.767641835401,\n  \"width\": 1902,\n  \"height\": 7811,\n  \"frame_rate\": 6923.739826924101,\n  \"duration\": 8275.514948851363,\n  \"file_size\": 8914,\n  \"modifications\": {\n    \"key_0\": true,\n    \"key_1\": \"string\"\n  },\n  \"metadata\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5dd71f01-a89f-45a4-82b0-6239432e9972",
+              "name": "The API key is missing or invalid.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the render."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "849a0f68-674e-4cd1-90a3-543e9c6d7d48",
+              "name": "The requested resource does not exist.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the render."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "a948d2f3-fbb8-41d6-a51b-e3529d9780f5",
+              "name": "Rate limit exceeded. Retry after backing off.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "renders",
+                    ":id"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<uuid>",
+                      "key": "id",
+                      "description": "(Required) The unique identifier of the render."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"hint\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.creatomate.com/v1",
+      "key": "baseUrl"
+    }
+  ],
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{bearerToken}}"
+      }
+    ]
+  },
+  "info": {
+    "_postman_id": "647a3343-0dfe-4400-9604-6d8ea3025704",
+    "name": "Creatomate Renders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API for the Creatomate media-automation platform. Generate videos and images at scale by applying per-element modifications to reusable templates. Renders run asynchronously; callers poll for status or receive a webhook when each render reaches a terminal state. All requests are authenticated with a project API key sent as a Bearer token.\n\nContact Support:\n Name: Creatomate Support",
+      "type": "text/plain"
+    }
+  }
+}
