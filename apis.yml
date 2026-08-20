@@ -23,6 +23,13 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/creatomate
 tags:
 - Media
 - Video Generation
+- Image-Generation
+- Automation
+- Templates
+- Rendering
+tags_raw:
+- Media
+- Video Generation
 - Image Generation
 - Automation
 - Templates
