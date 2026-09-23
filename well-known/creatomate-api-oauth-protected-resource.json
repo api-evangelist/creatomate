@@ -1,0 +1,1 @@
+{"resource":"https://api.creatomate.com/mcp","resource_name":"Creatomate MCP","authorization_servers":["https://api.creatomate.com"],"scopes_supported":["mcp"],"bearer_methods_supported":["header"]}

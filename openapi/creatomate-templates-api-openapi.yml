@@ -1,6 +1,6 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
-  title: Creatomate Renders Templates API
+  title: Creatomate Templates API
   description: REST API for the Creatomate media-automation platform. Generate videos and images at scale by applying per-element modifications to reusable templates. Renders run asynchronously; callers poll for status or receive a webhook when each render reaches a terminal state. All requests are authenticated with a project API key sent as a Bearer token.
   termsOfService: https://creatomate.com/legal/terms
   contact:
@@ -82,8 +82,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   responses:
-    TooManyRequests:
-      description: Rate limit exceeded. Retry after backing off.
+    NotFound:
+      description: The requested resource does not exist.
       content:
         application/json:
           schema:
@@ -94,21 +94,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource does not exist.
+    TooManyRequests:
+      description: Rate limit exceeded. Retry after backing off.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
-    Error:
-      type: object
-      description: Error response payload.
-      properties:
-        hint:
-          type: string
-          description: Human-readable description of the error.
-      additionalProperties: true
     Template:
       type: object
       description: A reusable design that renders can be produced from.
@@ -126,24 +118,29 @@ components:
           items:
             type: string
         width:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: Template width in pixels.
         height:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: Template height in pixels.
         frame_rate:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: Template frame rate in fps.
         duration:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: Template duration in seconds.
         source:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           description: The RenderScript source of the template. Returned by GET /templates/{id} but omitted from the list endpoint.
           additionalProperties: true
         created_at:
@@ -157,6 +154,14 @@ components:
       required:
       - id
       - name
+    Error:
+      type: object
+      description: Error response payload.
+      properties:
+        hint:
+          type: string
+          description: Human-readable description of the error.
+      additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http

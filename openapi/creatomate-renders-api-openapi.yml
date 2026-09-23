@@ -1,4 +1,4 @@
-openapi: 3.0.1
+openapi: 3.2.0
 info:
   title: Creatomate Renders API
   description: REST API for the Creatomate media-automation platform. Generate videos and images at scale by applying per-element modifications to reusable templates. Renders run asynchronously; callers poll for status or receive a webhook when each render reaches a terminal state. All requests are authenticated with a project API key sent as a Bearer token.
@@ -140,14 +140,8 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   responses:
-    Unauthorized:
-      description: The API key is missing or invalid.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Rate limit exceeded. Retry after backing off.
+    BadRequest:
+      description: The request body was malformed or failed validation.
       content:
         application/json:
           schema:
@@ -158,8 +152,14 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    BadRequest:
-      description: The request body was malformed or failed validation.
+    Unauthorized:
+      description: The API key is missing or invalid.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/Error'
+    TooManyRequests:
+      description: Rate limit exceeded. Retry after backing off.
       content:
         application/json:
           schema:
@@ -176,31 +176,37 @@ components:
         status:
           $ref: '#/components/schemas/RenderStatus'
         error_message:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Present only when status is `failed`; explains the failure.
         url:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uri
-          nullable: true
           description: URL of the produced file once the render has succeeded.
         snapshot_url:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uri
-          nullable: true
           description: URL of a still preview image of the output.
         template_id:
-          type: string
+          type:
+          - string
+          - 'null'
           format: uuid
-          nullable: true
           description: The template this render was produced from, if any.
         template_name:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Name of the source template.
         template_tags:
-          type: array
-          nullable: true
+          type:
+          - array
+          - 'null'
           description: Tags of the source template.
           items:
             type: string
@@ -222,25 +228,30 @@ components:
           type: integer
           description: Output height in pixels.
         frame_rate:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: Output frame rate in fps for video output.
         duration:
-          type: number
-          nullable: true
+          type:
+          - number
+          - 'null'
           description: Output duration in seconds for video output.
         file_size:
-          type: integer
-          nullable: true
+          type:
+          - integer
+          - 'null'
           description: Size of the output file in bytes.
         modifications:
-          type: object
-          nullable: true
+          type:
+          - object
+          - 'null'
           description: The modifications that were applied to produce this render.
           additionalProperties: true
         metadata:
-          type: string
-          nullable: true
+          type:
+          - string
+          - 'null'
           description: Caller-supplied metadata echoed back from the create request.
       required:
       - id
@@ -295,14 +306,6 @@ components:
           type: string
           description: Arbitrary text stored with the render and echoed back in the Render object and the webhook payload.
       additionalProperties: false
-    Error:
-      type: object
-      description: Error response payload.
-      properties:
-        hint:
-          type: string
-          description: Human-readable description of the error.
-      additionalProperties: true
     RenderStatus:
       type: string
       description: Lifecycle state of a render. `succeeded` and `failed` are terminal states that trigger the webhook, if configured.
@@ -313,6 +316,14 @@ components:
       - rendering
       - succeeded
       - failed
+    Error:
+      type: object
+      description: Error response payload.
+      properties:
+        hint:
+          type: string
+          description: Human-readable description of the error.
+      additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http
