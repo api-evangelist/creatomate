@@ -140,14 +140,14 @@ paths:
           $ref: '#/components/responses/TooManyRequests'
 components:
   responses:
-    BadRequest:
-      description: The request body was malformed or failed validation.
+    TooManyRequests:
+      description: Rate limit exceeded. Retry after backing off.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    NotFound:
-      description: The requested resource does not exist.
+    BadRequest:
+      description: The request body was malformed or failed validation.
       content:
         application/json:
           schema:
@@ -158,13 +158,81 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Rate limit exceeded. Retry after backing off.
+    NotFound:
+      description: The requested resource does not exist.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
   schemas:
+    Error:
+      type: object
+      description: Error response payload.
+      properties:
+        hint:
+          type: string
+          description: Human-readable description of the error.
+      additionalProperties: true
+    CreateRenderRequest:
+      type: object
+      description: Body for POST /renders. Supply exactly one of `template_id`, `source`, or `tags` to select what is rendered.
+      properties:
+        template_id:
+          type: string
+          format: uuid
+          description: The template to render.
+        source:
+          type: object
+          description: An inline RenderScript source object, used instead of a template_id to render an ad-hoc design.
+          additionalProperties: true
+        tags:
+          type: array
+          description: One or more template tags. Every template carrying any of these tags is rendered, allowing batches to be started in one request.
+          items:
+            type: string
+        modifications:
+          type: object
+          description: Map of element name to replacement value. Keys are the named elements declared in the template (for example `Text-1`, `Video`); values may be strings, numbers, URLs, or nested property objects.
+          additionalProperties: true
+        output_format:
+          type: string
+          description: The output file format. Defaults to the template's format.
+          enum:
+          - jpg
+          - png
+          - gif
+          - mp4
+        frame_rate:
+          type: number
+          description: Frame rate (fps) for video output. Defaults to the template's frame rate.
+        render_scale:
+          type: number
+          description: Scale of the render relative to the template. 1.0 (the default) produces the same dimensions as the template.
+          default: 1.0
+        max_width:
+          type: number
+          description: Scales the render so its width never exceeds this value while preserving aspect ratio. Overrides render_scale when set.
+        max_height:
+          type: number
+          description: Scales the render so its height never exceeds this value while preserving aspect ratio. Overrides render_scale when set.
+        webhook_url:
+          type: string
+          format: uri
+          description: URL that Creatomate calls with an HTTP POST carrying the Render object once the render succeeds or fails.
+        metadata:
+          type: string
+          description: Arbitrary text stored with the render and echoed back in the Render object and the webhook payload.
+      additionalProperties: false
+    RenderStatus:
+      type: string
+      description: Lifecycle state of a render. `succeeded` and `failed` are terminal states that trigger the webhook, if configured.
+      enum:
+      - planned
+      - waiting
+      - transcribing
+      - rendering
+      - succeeded
+      - failed
     Render:
       type: object
       description: A render job and, once complete, a pointer to its output file.
@@ -256,74 +324,6 @@ components:
       required:
       - id
       - status
-    CreateRenderRequest:
-      type: object
-      description: Body for POST /renders. Supply exactly one of `template_id`, `source`, or `tags` to select what is rendered.
-      properties:
-        template_id:
-          type: string
-          format: uuid
-          description: The template to render.
-        source:
-          type: object
-          description: An inline RenderScript source object, used instead of a template_id to render an ad-hoc design.
-          additionalProperties: true
-        tags:
-          type: array
-          description: One or more template tags. Every template carrying any of these tags is rendered, allowing batches to be started in one request.
-          items:
-            type: string
-        modifications:
-          type: object
-          description: Map of element name to replacement value. Keys are the named elements declared in the template (for example `Text-1`, `Video`); values may be strings, numbers, URLs, or nested property objects.
-          additionalProperties: true
-        output_format:
-          type: string
-          description: The output file format. Defaults to the template's format.
-          enum:
-          - jpg
-          - png
-          - gif
-          - mp4
-        frame_rate:
-          type: number
-          description: Frame rate (fps) for video output. Defaults to the template's frame rate.
-        render_scale:
-          type: number
-          description: Scale of the render relative to the template. 1.0 (the default) produces the same dimensions as the template.
-          default: 1.0
-        max_width:
-          type: number
-          description: Scales the render so its width never exceeds this value while preserving aspect ratio. Overrides render_scale when set.
-        max_height:
-          type: number
-          description: Scales the render so its height never exceeds this value while preserving aspect ratio. Overrides render_scale when set.
-        webhook_url:
-          type: string
-          format: uri
-          description: URL that Creatomate calls with an HTTP POST carrying the Render object once the render succeeds or fails.
-        metadata:
-          type: string
-          description: Arbitrary text stored with the render and echoed back in the Render object and the webhook payload.
-      additionalProperties: false
-    RenderStatus:
-      type: string
-      description: Lifecycle state of a render. `succeeded` and `failed` are terminal states that trigger the webhook, if configured.
-      enum:
-      - planned
-      - waiting
-      - transcribing
-      - rendering
-      - succeeded
-      - failed
-    Error:
-      type: object
-      description: Error response payload.
-      properties:
-        hint:
-          type: string
-          description: Human-readable description of the error.
-      additionalProperties: true
   securitySchemes:
     bearerAuth:
       type: http

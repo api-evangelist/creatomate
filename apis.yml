@@ -35,7 +35,7 @@ image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/creatomate
 tags:
 - Media
 - Video Generation
-- Image-Generation
+- Image Generation
 - Automation
 - Templates
 - Rendering
@@ -46,6 +46,7 @@ tags_raw:
 - Automation
 - Templates
 - Rendering
+- Image-Generation
 created: '2026-06-20'
 modified: '2026-06-20'
 specificationVersion: '0.23'
