@@ -144,8 +144,8 @@ components:
       - id
       - name
   responses:
-    NotFound:
-      description: The requested resource does not exist.
+    TooManyRequests:
+      description: Rate limit exceeded. Retry after backing off.
       content:
         application/json:
           schema:
@@ -156,8 +156,8 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/Error'
-    TooManyRequests:
-      description: Rate limit exceeded. Retry after backing off.
+    NotFound:
+      description: The requested resource does not exist.
       content:
         application/json:
           schema:
