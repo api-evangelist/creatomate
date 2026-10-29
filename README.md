@@ -1,4 +1,4 @@
-# Creatomate (creatomate)
+# Creatomate
 
 <!-- API-EVANGELIST-PROVENANCE:BEGIN -->
 > ### About this repository
@@ -66,97 +66,125 @@
 
 Creatomate is a media-automation platform that generates videos and images at scale from reusable templates. Its REST API renders MP4/GIF/image output by applying per-element modifications to a template, runs asynchronously, and notifies callers via polling or webhooks. Billing is credit-based per rendered output.
 
-**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/creatomate/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/creatomate/refs/heads/main/apis.yml)
+**Areas:** Media · Video Generation · Image Generation · Automation · Templates · Rendering
 
-## Tags
+## Creatomate on APIs.io
 
-- Media
-- Video Generation
-- Image Generation
-- Automation
-- Templates
-- Rendering
+Everything profiled for Creatomate is published on APIs.io rather than in this repository. Start at the provider page — **[apis.io/providers/creatomate/](https://apis.io/providers/creatomate/)** — or go straight to one of the APIs or properties below.
 
-## Timestamps
+### APIs (2)
 
-- **Created:** 2026-06-20
-- **Modified:** 2026-06-20
+- [Creatomate Renders API](https://apis.io/apis/creatomate/creatomate-renders-api/) — Create renders and check their status.
+- [Creatomate Templates API](https://apis.io/apis/creatomate/creatomate-templates-api/) — List and retrieve project templates.
 
-## APIs
+### Published properties
 
-### Creatomate Renders API
+Each property below is a page on APIs.io carrying the machine-readable artifact and what it says.
 
-Create one or more renders from a template ID, source, or template tags, applying per-element modifications, then poll for status or receive a webhook when each render succeeds or fails. Output is MP4, GIF, JPG, or PNG hosted by Creatomate.
+#### MCP servers (1)
 
-- **Human URL:** [https://creatomate.com/docs/api/reference/introduction](https://creatomate.com/docs/api/reference/introduction)
-- **Base URL:** `https://api.creatomate.com/v1`
+Model Context Protocol servers that expose the API to agents.
 
-#### Tags
+- [creatomate](https://apis.io/servers/creatomate/creatomate/)
 
-- Renders
-- Video
-- Image
-- Async
+#### Agentic access (1)
 
-#### Properties
+Which operations an agent can call, which act, and which need a human in the loop.
 
-- [Documentation](https://creatomate.com/docs/api/quick-start/introduction)
-- [API Reference](https://creatomate.com/docs/api/reference/create-a-render)
-- [OpenAPI](openapi/creatomate-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/creatomate.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/creatomate.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+- [Creatomate Agentic Access](https://apis.io/agentic-access/creatomate/creatomate-agentic-access/)
 
-### Creatomate Templates API
+#### Collections (3)
 
-List the templates in a project with their metadata and tags, and fetch a single template by ID including its RenderScript source, which describes the named elements available for modification at render time.
+Postman and Open Collection request collections.
 
-- **Human URL:** [https://creatomate.com/docs/api/reference/get-all-templates-in-a-project](https://creatomate.com/docs/api/reference/get-all-templates-in-a-project)
-- **Base URL:** `https://api.creatomate.com/v1`
+- [Creatomate API](https://apis.io/collections/creatomate/open-creatomate/)
+- [Creatomate Renders API](https://apis.io/collections/creatomate/open-creatomate-renders-api/)
+- [Creatomate Renders Templates API](https://apis.io/collections/creatomate/open-creatomate-templates-api/)
 
-#### Tags
+#### Security (2)
 
-- Templates
-- Catalog
-- Metadata
+Authentication, trust centre, and vulnerability disclosure.
 
-#### Properties
+- [Creatomate Authentication](https://apis.io/security/creatomate/creatomate-authentication/)
+- [Creatomate Domain Security](https://apis.io/security/creatomate/creatomate-domain-security/)
 
-- [Documentation](https://creatomate.com/docs/api/reference/get-all-templates-in-a-project)
-- [API Reference](https://creatomate.com/docs/api/reference/get-a-template-by-its-id)
-- [OpenAPI](openapi/creatomate-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
-- [Postman Collection](collections/creatomate.postman_collection.json) — [Postman Collection 2.1](https://schema.getpostman.com/json/collection/v2.1.0/collection.json)
-- [Open Collection](collections/creatomate.opencollection.json) — [Open Collection 1.0](https://schema.opencollection.com/opencollection/v1.0.0.json)
+#### Plans and pricing (1)
 
-### Creatomate Webhooks
+Published plans, tiers and prices.
 
-Per-render callback delivery. Supply webhook_url when creating a render and Creatomate POSTs the full Render object (including any caller-supplied metadata) to that URL once the render reaches a terminal succeeded or failed state.
+- [Creatomate Plans Pricing](https://apis.io/plans/creatomate/creatomate-plans-pricing/)
 
-- **Human URL:** [https://creatomate.com/docs/api/rest-api/webhooks](https://creatomate.com/docs/api/rest-api/webhooks)
-- **Base URL:** `https://api.creatomate.com/v1`
+#### Rate limits (1)
 
-#### Tags
+Published request limits.
 
-- Webhooks
-- Async
-- Notifications
+- [Creatomate Rate Limits](https://apis.io/rate-limits/creatomate/creatomate-rate-limits/)
 
-#### Properties
+#### FinOps (1)
 
-- [Documentation](https://creatomate.com/docs/api/rest-api/webhooks)
-- [API Reference](https://creatomate.com/docs/api/reference/set-up-a-webhook)
-- [OpenAPI](openapi/creatomate-openapi.yml) — [OpenAPI Specification](https://spec.openapis.org/oas/latest.html)
+What the API costs to run, by operation.
 
-## Common Properties
+- [Creatomate Finops](https://apis.io/finops/creatomate/creatomate-finops/)
 
-- [GitHub Organization](https://github.com/creatomate)
-- [LinkedIn](https://www.linkedin.com/company/creatomate)
+## Where to find this API
+
+Links to the company's own pages. This repository publishes no copy of their specifications — the canonical document is theirs and lives at the URLs below.
+
 - [Website](https://creatomate.com/)
 - [Documentation](https://creatomate.com/docs/api/quick-start/introduction)
-- [Plans](plans/creatomate-plans-pricing.yml)
-- [Rate Limits](rate-limits/creatomate-rate-limits.yml)
-- [Fin Ops](finops/creatomate-finops.yml)
+- [GitHub](https://github.com/creatomate)
 
-## Maintainers
+## API Evangelist rating
 
-**FN:** Kin Lane
-**Email:** kin@apievangelist.com
+**Kin Score 26.7** — thin · rubric 0.25.0 · scored 2026-10-23
+
+| Facet | Score |
+|---|---|
+| Discoverability | 68.3 |
+| Contract quality | 50.5 |
+| Contract governance | 0.0 |
+| Operational transparency | 10.5 |
+| Developer ergonomics | 29.8 |
+| Access clarity | 7.9 |
+
+**Agent readiness 48.2** — agent-ready (gated down from agent-native)
+
+| Agent-readiness dimension | Result |
+|---|---|
+| Spec Presence | yes |
+| Agentic Access | derived (partial credit) |
+| Reversibility Documented | — |
+| MCP Server | verified |
+| Auth Clarity | served (partial credit) |
+| Idempotency | — |
+| Error Semantics | — |
+| OpenAPI Examples | partial |
+| Rate Limit Signal | derived (partial credit) |
+| Event Surface Described | — |
+| Agent Skills | — |
+| Well Known Catalog | — |
+| Consent Identity | — |
+| Agent Card | — |
+| Dry Run Mode | — |
+| Delegated Identity | served (partial credit) |
+| Protected Resource Metadata | verified |
+| Dynamic Client Registration | yes |
+| Agentic Commerce | — |
+| Pagination Ratio | paginated |
+| Operation Distinctiveness | distinct |
+
+**Regulatory alignment 11.8** — AI & Biometrics
+
+The rubric is published at [github.com/api-evangelist/kin-score](https://github.com/api-evangelist/kin-score). The per-check breakdown behind these numbers — which checks were earned, partial or missed — along with score history and how this provider compares to its peers, is available at [apis.io/providers/creatomate/](https://apis.io/providers/creatomate/).
+
+## How this profile is made
+
+API Evangelist profiles a company's public API surface the way a developer would find it: the website, developer portal and documentation, the specifications it publishes, its public repositories, and its pricing, status and changelog pages. From that it derives the properties above — contracts split per API, workflows, schemas, collections, governance rules, plans and rate limits — and scores them against the published [Kin Score rubric](https://github.com/api-evangelist/kin-score).
+
+The artifacts are published on [APIs.io](https://apis.io), not in this repository. This repository is the public record for Creatomate: the place to say something is wrong, missing or out of date, and to ask for a re-score or a removal.
+
+## Open an issue
+
+- **Something about this listing** — a wrong description, a missing API, a stale artifact or a question about the rating: [open an issue on this repository](https://github.com/api-evangelist/creatomate/issues/new).
+- **A new API, or one that is not in the catalog yet** — [submit it on APIs.io](https://apis.io/add/).
+- **Anything else** — [the APIs.io inbox](https://github.com/api-search/inbox/issues/new) or [info@apievangelist.com](mailto:info@apievangelist.com).
